@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
@@ -42,13 +41,15 @@ function HomePage() {
         {/* Action Buttons */}
         <div className="space-y-4">
           {/* Login Button */}
+          <Link to="/signin">
           <button className="w-full py-3 bg-gray-200 text-gray-600 rounded-2xl font-medium text-lg hover:bg-gray-300 transition-colors duration-200">
             Se connecter
           </button>
+          </Link>
 
           {/* Sign Up Button */}
           <Link to="/signup">
-            <button className="w-full py-3 bg-black text-white rounded-2xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200">
+            <button className="w-full py-3 bg-black text-white rounded-2xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200 mt-4">
               Crée un compte
             </button>
           </Link>

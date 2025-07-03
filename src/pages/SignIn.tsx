@@ -31,7 +31,7 @@ const SignupPage: React.FC = () => {
       <Logo />
       
       <div className="bg-white items-center justify-center rounded-t-3xl p-6 shadow-lg flex flex-col md:gap-6">
-        <PhoneInputForm country={country} setCountry={setCountry} phone={phone} setPhone={setPhone} valid={valid} />
+        <PhoneInputForm country={country} setCountry={setCountry} phone={phone} setPhone={setPhone} valid={valid} isSignIn={true} />
       </div>
     </div>
   );

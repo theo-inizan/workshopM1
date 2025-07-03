@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import CountrySelector from '../components/CountrySelector';
-import logo from '../assets/logo.png';
-import google from '../assets/google.webp';
-import facebook from '../assets/facebook.png';
 import background from '../assets/background.png';
+import ProgressBar from '../components/ProgressBar';
+import logo from '../assets/logo.png';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const defaultCountry = { code: 'FR', name: 'France', flag: '🇫��', dial: '+33' };
+const defaultCountry = { code: 'FR', name: 'France', flag: '🇫', dial: '+33' };
 
 function isValidPhone(phone: string) {
   // Valide si 9 à 15 chiffres, sans espaces
@@ -16,6 +15,8 @@ const PhoneNumberVerification: React.FC = () => {
   const [country, setCountry] = useState(defaultCountry);
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const isCodeComplete = code.every(digit => digit !== '' && /^\d$/.test(digit));
 
@@ -24,13 +25,8 @@ const PhoneNumberVerification: React.FC = () => {
       className="h-screen flex flex-col bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${background})` }}
     >
-      {/* Barre de progression */}
       <div className="p-4">
-        <button className="text-2xl">←</button>
-        <div className="w-full h-2 bg-gray-200 rounded-full mt-4">
-          <div className="h-2 bg-pink-400 rounded-full" style={{ width: '30%' }}></div>
-        </div>
-        <div className="text-right text-xs mt-1 text-gray-700">1/3</div>
+       <ProgressBar step={2} total={3} onBack={() => navigate('/signup')} />
       </div>
       {/* Logo */}
       <div className="flex flex-col items-center justify-center flex-1">
@@ -86,12 +82,14 @@ const PhoneNumberVerification: React.FC = () => {
           <a href="#" className="text-center py-3 text-gray-500 underline text-sm">Recevoir un nouveau code</a>
         </div>
         
-        <button
-          className={`w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-colors ${isCodeComplete ? 'bg-black text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
-          disabled={!isCodeComplete}
-        >
-          Continuer <span>→</span>
-        </button>
+        <Link to={location?.state?.from === "signin" ? "spliit" : "info"}>
+          <button
+            className={`w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-colors ${isCodeComplete ? 'bg-black text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
+            disabled={!isCodeComplete}
+          >
+            Continuer <span>→</span>
+          </button>
+        </Link>
       </div>
     </div>
   );
