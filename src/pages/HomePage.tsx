@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -46,9 +47,11 @@ function HomePage() {
           </button>
 
           {/* Sign Up Button */}
-          <button className="w-full py-3 bg-black text-white rounded-2xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200">
-            Crée un compte
-          </button>
+          <Link to="/signup">
+            <button className="w-full py-3 bg-black text-white rounded-2xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200">
+              Crée un compte
+            </button>
+          </Link>
         </div>
 
         {/* Logo */}
