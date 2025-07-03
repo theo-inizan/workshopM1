@@ -17,6 +17,7 @@ const PhoneNumberVerification: React.FC = () => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from;
 
   const isCodeComplete = code.every(digit => digit !== '' && /^\d$/.test(digit));
 
@@ -82,7 +83,7 @@ const PhoneNumberVerification: React.FC = () => {
           <a href="#" className="text-center py-3 text-gray-500 underline text-sm">Recevoir un nouveau code</a>
         </div>
         
-        <Link to={location?.state?.from === "signin" ? "spliit" : "info"}>
+        <Link to={from === 'signin' ? '/spliiit' : '/info'}>
           <button
             className={`w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-colors ${isCodeComplete ? 'bg-black text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
             disabled={!isCodeComplete}
