@@ -35,7 +35,7 @@ const PhoneInputForm = ({ country, setCountry, phone, setPhone, valid, isSignIn 
         />
       </div>
       {isSignIn && (
-        <span className="text-gray-400 text-sm">J'ai changer de numéro de téléphone</span>
+        <span className="text-gray-500 underline text-sm">J'ai changé de numéro de téléphone</span>
       )}
       <div className="flex items-center my-2">
         <div className="flex-1 border-t border-gray-300"></div>
