@@ -25,7 +25,7 @@ const PhoneInputForm = ({ country, setCountry, phone, setPhone, valid, isSignIn 
     </div>
     <SocialButtons />
     <a href="#" className="text-center text-gray-500 underline text-sm">Inscription par e-mail</a>
-    <Link to="/verification" state={{ from: isSignIn ? 'signin' : 'signup' }}>
+    <Link to="/verification" state={{ from: isSignIn ? 'signin' : 'signup', phone }}>
       <button
         className={`w-full max-w-sm rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 mt-2 transition-colors ${valid ? 'bg-black text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
         disabled={!valid}

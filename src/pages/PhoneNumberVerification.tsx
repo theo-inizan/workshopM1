@@ -18,6 +18,7 @@ const PhoneNumberVerification: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from;
+  const phoneNumber = location.state?.phone || '';
 
   const isCodeComplete = code.every(digit => digit !== '' && /^\d$/.test(digit));
 
@@ -40,7 +41,7 @@ const PhoneNumberVerification: React.FC = () => {
           <span className="text-gray-400 text-sm">
             Saissisez le code a 6 chiffres envoyés au
             <br />
-            <span className="font-bold text-blue-600">06 07 08 09 10</span>
+            <span className="font-bold text-blue-600">{phoneNumber}</span>
           </span>
 
           {/* bulles */}
