@@ -9,20 +9,25 @@ const PhoneInputForm = ({ country, setCountry, phone, setPhone, valid, isSignIn 
 
   const handleContinue = () => {
     if (valid) {
+      // Générer un code aléatoire à 6 chiffres
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
       // Formater le numéro complet avec l'indicatif pays
       const fullPhoneNumber = `${country.dial} ${phone}`;
       
       navigate('/verification', { 
         state: { 
-          phoneNumber: fullPhoneNumber 
+          phoneNumber: fullPhoneNumber,
+          verificationCode: verificationCode
         } 
       });
       // Afficher la notification après la navigation
       setTimeout(() => {
         showToast(
-          'Spliiit : 184712 est votre code de vérification. Ne le partagez pas !',
+          `Spliiit : ${verificationCode} est votre code de vérification. Ne le partagez pas !`,
           '38002',
-          'maintenant'
+          'maintenant',
+          6000  // 6 secondes au lieu de 4 par défaut
         );
       }, 100);
     }

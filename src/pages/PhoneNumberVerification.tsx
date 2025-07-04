@@ -15,18 +15,38 @@ const PhoneNumberVerification: React.FC = () => {
   const [country, setCountry] = useState(defaultCountry);
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [isShaking, setIsShaking] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from;
   const phoneNumber = location.state?.phoneNumber || '06 07 08 09 10';
+  const expectedCode = location.state?.verificationCode || '123456';
 
   const isCodeComplete = code.every(digit => digit !== '' && /^\d$/.test(digit));
+  const enteredCode = code.join('');
+  const isCodeCorrect = enteredCode === expectedCode;
+
+  const handleContinueClick = () => {
+    if (isCodeComplete && !isCodeCorrect) {
+      // Déclencher l'animation de vibration
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+    }
+  };
 
   return (
-    <div
-      className="h-screen flex flex-col bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${background})` }}
-    >
+    <>
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+      `}</style>
+      <div
+        className="h-screen flex flex-col bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${background})` }}
+      >
       <div className="p-4">
        <ProgressBar step={2} total={3} onBack={() => navigate('/signup')} />
       </div>
@@ -84,16 +104,33 @@ const PhoneNumberVerification: React.FC = () => {
           <a href="#" className="text-center py-3 text-gray-500 underline text-sm">Recevoir un nouveau code</a>
         </div>
         
-        <Link to={from === 'signin' ? '/spliiit' : '/info'}>
+        {isCodeCorrect ? (
+          <Link to={from === 'signin' ? '/spliiit' : '/info'}>
+            <button
+              className="w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-colors bg-black text-white cursor-pointer"
+            >
+              Continuer <span>→</span>
+            </button>
+          </Link>
+        ) : (
           <button
-            className={`w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-colors ${isCodeComplete ? 'bg-black text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
+            onClick={handleContinueClick}
+            className={`w-full rounded-full py-3 font-bold text-lg flex items-center justify-center gap-2 transition-all duration-200 ${
+              isCodeComplete 
+                ? 'bg-red-500 text-white cursor-pointer' 
+                : 'bg-gray-400 text-white cursor-not-allowed'
+            }`}
             disabled={!isCodeComplete}
+            style={{
+              animation: isShaking ? 'shake 0.5s ease-in-out' : 'none'
+            }}
           >
             Continuer <span>→</span>
           </button>
-        </Link>
+        )}
       </div>
     </div>
+    </>
   );
 };
 
