@@ -9,7 +9,14 @@ const PhoneInputForm = ({ country, setCountry, phone, setPhone, valid, isSignIn 
 
   const handleContinue = () => {
     if (valid) {
-      navigate('/verification');
+      // Formater le numéro complet avec l'indicatif pays
+      const fullPhoneNumber = `${country.dial} ${phone}`;
+      
+      navigate('/verification', { 
+        state: { 
+          phoneNumber: fullPhoneNumber 
+        } 
+      });
       // Afficher la notification après la navigation
       setTimeout(() => {
         showToast(

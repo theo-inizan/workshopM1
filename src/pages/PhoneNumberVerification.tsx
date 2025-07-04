@@ -18,7 +18,7 @@ const PhoneNumberVerification: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from;
-  const phoneNumber = location.state?.phone || '';
+  const phoneNumber = location.state?.phoneNumber || '06 07 08 09 10';
 
   const isCodeComplete = code.every(digit => digit !== '' && /^\d$/.test(digit));
 
