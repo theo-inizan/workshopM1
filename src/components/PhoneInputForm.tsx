@@ -39,11 +39,21 @@ const PhoneInputForm = ({ country, setCountry, phone, setPhone, valid, isSignIn 
       <div className="flex items-center gap-3">
         <CountrySelector selected={country} onSelect={setCountry} />
         <input
-          type="text"
+          type="tel"
           placeholder={country.dial}
           className="flex-1 bg-gray-100 rounded-full px-4 py-3 outline-none text-lg"
           value={phone}
-          onChange={e => setPhone(e.target.value)}
+          onChange={e => {
+            // Ne garder que les chiffres et les espaces
+            const value = e.target.value.replace(/[^0-9\s]/g, '');
+            setPhone(value);
+          }}
+          onKeyPress={e => {
+            // Empêcher la saisie de caractères non numériques (sauf espace)
+            if (!/[0-9\s]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+              e.preventDefault();
+            }
+          }}
         />
       </div>
       {isSignIn && (
