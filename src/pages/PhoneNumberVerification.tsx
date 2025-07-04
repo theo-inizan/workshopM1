@@ -16,6 +16,7 @@ const PhoneNumberVerification: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [isShaking, setIsShaking] = useState(false);
+  const [isInputShaking, setIsInputShaking] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from;
@@ -28,9 +29,13 @@ const PhoneNumberVerification: React.FC = () => {
 
   const handleContinueClick = () => {
     if (isCodeComplete && !isCodeCorrect) {
-      // Déclencher l'animation de vibration
+      // Déclencher l'animation de vibration sur le bouton ET les inputs
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 500);
+      setIsInputShaking(true);
+      setTimeout(() => {
+        setIsShaking(false);
+        setIsInputShaking(false);
+      }, 500);
     }
   };
 
@@ -72,7 +77,14 @@ const PhoneNumberVerification: React.FC = () => {
                 type="text"
                 maxLength={1}
                 value={code[index]}
-                className="w-12 h-12 border-2 border-gray-300 rounded-full text-center text-xl font-bold focus:border-pink-500 focus:outline-none"
+                className={`w-12 h-12 border-2 rounded-full text-center text-xl font-bold focus:border-pink-500 focus:outline-none ${
+                  isCodeComplete && !isCodeCorrect 
+                    ? 'border-red-500' 
+                    : 'border-gray-300'
+                }`}
+                style={{
+                  animation: isInputShaking ? 'shake 0.5s ease-in-out' : 'none'
+                }}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value && /^\d$/.test(value)) {
